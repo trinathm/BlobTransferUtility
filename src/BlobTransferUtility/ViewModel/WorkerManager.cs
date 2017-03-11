@@ -234,10 +234,13 @@ namespace BlobTransferUtility.ViewModel
                         var containerReference = blobClient.GetContainerReference(job.Container);
                         if (containerReference.CreateIfNotExists())
                         {
-                            var permissions = new BlobContainerPermissions();
-                            permissions = containerReference.GetPermissions();
-                            permissions.PublicAccess = BlobContainerPublicAccessType.Container;
-                            containerReference.SetPermissions(permissions);
+                            if (!job.IsContainerPrivate)
+                            {
+                                var permissions = new BlobContainerPermissions();
+                                permissions = containerReference.GetPermissions();
+                                permissions.PublicAccess = BlobContainerPublicAccessType.Container;
+                                containerReference.SetPermissions(permissions);
+                            }
                         }
 
                         var blobReference = containerReference.GetBlockBlobReference(job.BlobName);

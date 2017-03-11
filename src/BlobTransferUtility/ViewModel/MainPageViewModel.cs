@@ -468,6 +468,7 @@ namespace BlobTransferUtility.ViewModel
                         SizeInBytes = file.SizeInBytes,
                         BlobName = string.Format(DefaultBlobNameFormat, file.Name).Replace("\\","/"),
                         Container = containerName.ToLower(),
+                        IsContainerPrivate = AreContainersPrivate,
                         ContentType = DefaultContentType,
                         StorageAccount = DefaultStorageAccount,
                         StorageAccountKey = DefaultStorageAccountKey,
@@ -535,6 +536,13 @@ namespace BlobTransferUtility.ViewModel
         {
             get { return _UseFirstLevelAsContainerName; }
             set { SetField(ref _UseFirstLevelAsContainerName, value, () => UseFirstLevelAsContainerName); }
+        }
+
+        private bool _AreContainersPrivate;
+        public bool AreContainersPrivate
+        {
+            get { return _AreContainersPrivate; }
+            set { SetField(ref _AreContainersPrivate, value, () => AreContainersPrivate);  }
         }
     }
 }

@@ -126,6 +126,7 @@ xmlns:my="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     </my:DataGrid>
                     <StackPanel Grid.Row="2">
                         <CheckBox Margin="4 4 0 4" Content="Use the first relative folder name as the container name" IsChecked="{Binding UseFirstLevelAsContainerName, Mode=TwoWay}"/>
+                        <CheckBox Margin="4 4 0 4" Content="Are Containers Private" IsChecked="{Binding AreContainersPrivate, Mode=TwoWay}"/>
                         <Expander Header="Properties">
                             <Grid Margin="4">
                                 <Grid.RowDefinitions>

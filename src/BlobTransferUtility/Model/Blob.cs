@@ -22,6 +22,13 @@ namespace BlobTransferUtility.Model
             set { SetField(ref _Container, value, () => Container); }
         }
 
+        private bool _IsContainerPrivate;
+        public bool IsContainerPrivate
+        {
+            get { return _IsContainerPrivate; }
+            set { SetField(ref _IsContainerPrivate, value, () => IsContainerPrivate); }
+        }
+
         private string _StorageAccount;
         public string StorageAccount
         {
