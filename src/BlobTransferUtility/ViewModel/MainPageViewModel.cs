@@ -1,7 +1,7 @@
 ﻿using BlobTransferUtility.Model;
 using Microsoft.Win32;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;
+using Microsoft.WindowsAzure.Storage;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace BlobTransferUtility.ViewModel
 {
@@ -122,9 +123,7 @@ namespace BlobTransferUtility.ViewModel
                     var blobClient = storageAccount.CreateCloudBlobClient();
                     var containerReference = blobClient.GetContainerReference(DefaultContainerName);
                     var blobs = new List<Blob>();
-                    foreach (var blobItem in containerReference.ListBlobs(new BlobRequestOptions() {
-                         UseFlatBlobListing = true,
-                    }))
+                    foreach (var blobItem in containerReference.ListBlobs(null, false))
                     {
                         if (blobItem is CloudBlob)
                         {

@@ -1,7 +1,7 @@
 ﻿using BlobTransferUtility.Helpers;
 using BlobTransferUtility.Model;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;
+using Microsoft.WindowsAzure.Storage;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -232,8 +232,8 @@ namespace BlobTransferUtility.ViewModel
 
                         var containerReference = blobClient.GetContainerReference(job.Container);
 
-                        containerReference.CreateIfNotExist();
-                        var blobReference = containerReference.GetBlobReference(job.BlobName);
+                        containerReference.CreateIfNotExists();
+                        var blobReference = containerReference.GetBlockBlobReference(job.BlobName);
 
                         try
                         {
@@ -241,7 +241,7 @@ namespace BlobTransferUtility.ViewModel
                             {
                                 blobReference.FetchAttributes();
                                 var fileInfo = new FileInfo(job.File.FullFilePath);
-                                if (blobReference.Attributes.Properties.Length == fileInfo.Length)
+                                if (blobReference.Properties.Length == fileInfo.Length)
                                 {
                                     worker.Message = "Same file already exists";
                                     worker.Finish = DateTime.Now;
@@ -292,11 +292,11 @@ namespace BlobTransferUtility.ViewModel
                             switch (job.JobType)
                             {
                                 case BlobJobType.Upload:
-                                    blobReference.UploadFile(job.File.FullFilePath);
+                                    blobReference.UploadFromFile(job.File.FullFilePath);
                                     break;
                                 case BlobJobType.Download:
                                     Directory.CreateDirectory(Path.GetDirectoryName(job.File.FullFilePath));
-                                    blobReference.DownloadToFile(job.File.FullFilePath);
+                                    blobReference.DownloadToFile(job.File.FullFilePath, FileMode.Create);
                                     break;
                             }
 
